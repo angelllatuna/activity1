@@ -1,19 +1,22 @@
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import React from "react";
+import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity,} from "react-native";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = () => {
   const navigation = useNavigation(); // Access navigation object
 
+  // State for username, password, and error message
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
   const handleLogin = () => {
-    navigation.navigate("Home"); // Navigate to HomeScreen directly
+    if (!username || !password) {
+      setError("Please fill out all fields!"); // Show error message if fields are empty
+    } else {
+      setError(""); // Clear error message if fields are filled
+      navigation.navigate("Home"); // Navigate to HomeScreen
+    }
   };
 
   return (
@@ -32,23 +35,30 @@ const LoginScreen = () => {
       />
 
       {/* Welcome Text Section placed below the vector */}
-      <Text style={styles.welcomeText}>Welcome onboard!</Text>
-      <Text style={styles.subText}>
-        Let's start by logging in to your registered account.
-      </Text>
+      <Text style={styles.welcomeText}>Welcome, Buddy!</Text>
+      <Text style={styles.subText}> Login To Access Your Account</Text>
 
+      {/* Username Input */}
       <TextInput
         style={styles.input}
         placeholder="Enter your Username"
         placeholderTextColor="#666"
+        value={username}
+        onChangeText={(text) => setUsername(text)}
       />
 
+      {/* Password Input */}
       <TextInput
         style={styles.input}
         placeholder="Enter your Password"
         placeholderTextColor="#666"
         secureTextEntry={true}
+        value={password}
+        onChangeText={(text) => setPassword(text)}
       />
+
+      {/* Display Error Message */}
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
       {/* Login Button */}
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
@@ -88,7 +98,8 @@ const styles = StyleSheet.create({
   centerImage: {
     width: 300,
     height: 250,
-    marginTop: 180,
+    marginTop: 120,
+    marginBottom: -30,
     resizeMode: "contain",
   },
   welcomeText: {
@@ -102,7 +113,7 @@ const styles = StyleSheet.create({
     color: "#666",
     textAlign: "center",
     marginHorizontal: 40,
-    marginTop: 10,
+    
   },
   input: {
     width: "80%",
@@ -129,13 +140,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  errorText: {
+    color: "red",
+    fontSize: 14,
+    marginTop: 10,
+  },
   signupText: {
     marginTop: 20,
     fontSize: 16,
     color: "#666",
     textAlign: "center",
   },
-
   signupLink: {
     fontSize: 16,
     color: "#A77D5B",

@@ -22,7 +22,7 @@ const CartScreen = ({ navigation }) => {
       />
       <View style={styles.cartItemDetails}>
         <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemCode}>Code #{item.id.slice(0, 6)}</Text>
+        {/* <Text style={styles.itemCode}>Code #{item.id.slice(0, 6)}</Text> */}
         <Text style={styles.itemPrice}>₱{item.price.toFixed(2)}</Text>
       </View>
       <View style={styles.cartItemQuantity}>
@@ -58,7 +58,7 @@ const CartScreen = ({ navigation }) => {
           <MaterialCommunityIcons name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Shopping Cart</Text>
-        <MaterialCommunityIcons name="cart-outline" size={24} color="#A77D5B" />
+        <MaterialCommunityIcons name="" size={24} color="#A77D5B" />
       </View>
 
       <FlatList

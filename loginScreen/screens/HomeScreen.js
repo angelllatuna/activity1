@@ -41,7 +41,7 @@ const HomeScreen = () => {
           style={styles.menuButton}
           onPress={() => navigation.navigate('Beverages')}
         >
-          <MaterialCommunityIcons name="cup" size={50} color="#A77D5B" />
+          <Image source={require('../assets/beverages.png')} style={styles.menuImage} />
           <Text style={styles.menuText}>Beverages</Text>
         </TouchableOpacity>
 
@@ -50,7 +50,7 @@ const HomeScreen = () => {
           style={styles.menuButton}
           onPress={() => navigation.navigate('Pastries')}
         >
-          <MaterialCommunityIcons name="cake" size={50} color="#A77D5B" />
+          <Image source={require('../assets/pastries.png')} style={styles.menuImage} />
           <Text style={styles.menuText}>Pastries</Text>
         </TouchableOpacity>
       </View>
@@ -150,6 +150,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 5,
   },
+  menuImage: {
+    width: 50, // Adjust the width as needed
+    height: 50, // Adjust the height as needed
+    resizeMode: 'contain',
+  },
   menuText: {
     fontSize: 20,
     fontWeight: '600',
@@ -164,7 +169,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     flexDirection: "row",
   },
-
   cartBadge: {
     position: "absolute",
     top: -5,
@@ -176,7 +180,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
   cartBadgeText: {
     fontSize: 12,
     color: "#fff",

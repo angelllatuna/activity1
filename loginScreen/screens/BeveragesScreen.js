@@ -11,17 +11,18 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { CartContext } from "./CartContext";
 
+// Beverage Data with Static Image Paths
 const beverages = [
-  { id: "1", name: "Americano", icon: "coffee" },
-  { id: "2", name: "Cappuccino", icon: "coffee-outline" },
-  { id: "3", name: "Latte", icon: "cup" },
-  { id: "4", name: "Barako Coffee", icon: "coffee-maker" },
-  { id: "5", name: "Espresso", icon: "cup-outline" },
-  { id: "6", name: "Cold Brew", icon: "beer-outline" },
-  { id: "7", name: "Milk Tea", icon: "cup-water" },
-  { id: "9", name: "Sikwate", icon: "food-croissant" },
-  { id: "10", name: "Taho", icon: "food-fork-drink" },
-  { id: "11", name: "Shake", icon: "cup" },
+  { id: "1", name: "Americano", image: require("../assets/americano.png") },
+  { id: "2", name: "Cappuccino", image: require("../assets/cappucino.png") },
+  { id: "3", name: "Latte", image: require("../assets/latte.png") },
+  { id: "4", name: "Barako Coffee", image: require("../assets/barako.png") },
+  { id: "5", name: "Espresso", image: require("../assets/espresso.png") },
+  { id: "6", name: "Cold Brew", image: require("../assets/coldbrew.png") },
+  { id: "7", name: "Milk Tea", image: require("../assets/milktea.png") },
+  { id: "9", name: "Sikwate", image: require("../assets/sikwate.png") },
+  { id: "10", name: "Taho", image: require("../assets/taho.png") },
+  { id: "11", name: "Shake", image: require("../assets/shake.png") },
 ];
 
 const BeveragesScreen = () => {
@@ -67,11 +68,7 @@ const BeveragesScreen = () => {
                 navigation.navigate("BeverageDetail", { name: item.name })
               }
             >
-              <MaterialCommunityIcons
-                name={item.icon}
-                size={50}
-                color="#A77D5B"
-              />
+              <Image source={item.image} style={styles.menuImage} />
               <Text style={styles.menuText}>{item.name}</Text>
             </TouchableOpacity>
           ))}
@@ -151,7 +148,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto",
     marginTop: 100,
     paddingLeft: 100,
-    textAlign: "center", // Center the text
+    textAlign: "center",
   },
   cartButton: {
     position: "absolute",
@@ -160,7 +157,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     flexDirection: "row",
   },
-
   cartBadge: {
     position: "absolute",
     top: -5,
@@ -172,7 +168,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
   cartBadgeText: {
     fontSize: 12,
     color: "#fff",
@@ -184,26 +179,31 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   scrollContent: {
-    paddingBottom: 80, // Added padding to ensure space above the bottom nav bar
+    paddingBottom: 80,
   },
   menuGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "center", // Centering items horizontally
+    justifyContent: "center",
     alignItems: "flex-start",
   },
   menuButton: {
-    width: "45%", // Adjusted to fit two buttons per row and to center them
+    width: "45%",
     backgroundColor: "#fff",
     borderRadius: 15,
     alignItems: "center",
     padding: 20,
     elevation: 5,
     marginBottom: 20,
-    marginHorizontal: "2.5%", // Added margin to create space between buttons
+    marginHorizontal: "2.5%",
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
+  },
+  menuImage: {
+    width: 50,
+    height: 50,
+    resizeMode: "contain",
   },
   menuText: {
     fontSize: 20,
