@@ -76,40 +76,28 @@ const BeveragesScreen = () => {
       </ScrollView>
 
       {/* Bottom Navigation */}
-      <View style={styles.bottomNav}>
-        {/* Menu Button */}
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <MaterialCommunityIcons name="cup" size={30} color="#A77D5B" />
-          <Text style={styles.navText}>Menu</Text>
-        </TouchableOpacity>
-
-        {/* Order Button */}
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigation.navigate("Order")}
-        >
-          <MaterialCommunityIcons
-            name="cart-outline"
-            size={30}
-            color="#A77D5B"
-          />
-          <Text style={styles.navText}>Order</Text>
-        </TouchableOpacity>
-
-        {/* Profile Button */}
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigation.navigate("Profile")}
-        >
-          <MaterialCommunityIcons
-            name="account-outline"
-            size={30}
-            color="#A77D5B"
-          />
-          <Text style={styles.navText}>Profile</Text>
+            <View style={styles.bottomNav}>
+              {/* Menu Button */}
+              <TouchableOpacity style={styles.navButton} 
+              onPress={() => navigation.navigate('Home')}>
+                <Image source={require('../assets/menu.png')} style={styles.navImage} />
+                <Text style={styles.navText}>Menu</Text>
+              </TouchableOpacity>
+      
+              {/* Order Button */}
+              <TouchableOpacity 
+                style={styles.navButton}
+                onPress={() => navigation.navigate('Order')}>
+                  <Image source={require('../assets/order.png')} style={styles.navImage} />
+                <Text style={styles.navText}>Order</Text>
+              </TouchableOpacity>
+      
+              {/* Profile Button */}
+              <TouchableOpacity 
+                style={styles.navButton}
+                onPress={() => navigation.navigate('Profile')}>
+                  <Image source={require('../assets/profile.png')} style={styles.navImage} />
+                <Text style={styles.navText}>Profile</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -143,12 +131,10 @@ const styles = StyleSheet.create({
   },
   menuTitle: {
     fontSize: 30,
-    fontWeight: "700",
     color: "#000",
     fontFamily: "Roboto",
     marginTop: 100,
     paddingLeft: 100,
-    textAlign: "center",
   },
   cartButton: {
     position: "absolute",
@@ -156,6 +142,7 @@ const styles = StyleSheet.create({
     right: 20,
     backgroundColor: "transparent",
     flexDirection: "row",
+    
   },
   cartBadge: {
     position: "absolute",
@@ -188,22 +175,24 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   menuButton: {
-    width: "45%",
+    width: "40%",
     backgroundColor: "#fff",
     borderRadius: 15,
     alignItems: "center",
     padding: 20,
-    elevation: 5,
     marginBottom: 20,
     marginHorizontal: "2.5%",
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
   },
   menuImage: {
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
+    margin: -10,
     resizeMode: "contain",
+  },
+  navImage: {
+    width: 40, 
+    height: 40, 
+    resizeMode: 'contain',
   },
   menuText: {
     fontSize: 20,

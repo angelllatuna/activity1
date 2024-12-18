@@ -1,246 +1,262 @@
-import React, { useState } from "react";
-import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { FontAwesome, Ionicons, MaterialIcons, Feather } from '@expo/vector-icons';
 
-const RegisterScreen = () => {
-  const navigation = useNavigation();
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+const ProfileScreen = () => {
+  // State for profile information
+  const [profile, setProfile] = useState({
+    fullName: "Anna Avetisyan",
+    phoneNumber: "09876543265",
+    email: "info@aplusdesign.com",
+    gender: "Female",
+    address: "123 Main St, Cityville",
+    birthdate: "January 1, 1990",
+  });
 
+  // States for errors
   const [fullNameError, setFullNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [genderError, setGenderError] = useState("");
+  const [addressError, setAddressError] = useState("");
+  const [birthdateError, setBirthdateError] = useState("");
 
+  const [isEditing, setIsEditing] = useState(false);
+
+  // Handle Edit button click
+  const toggleEditMode = () => {
+    if (isEditing) {
+      validateForm(); // Validate form on save attempt
+    } else {
+      setIsEditing(true); // Allow editing if not in edit mode
+    }
+  };
+
+  // Handle input change
+  const handleInputChange = (field, value) => {
+    setProfile({
+      ...profile,
+      [field]: value,
+    });
+  };
+
+  // Form validation
   const validateForm = () => {
     let valid = true;
 
-    // Clear all errors before validating
+    // Clear previous errors
     setFullNameError("");
     setEmailError("");
     setPhoneNumberError("");
-    setPasswordError("");
-    setConfirmPasswordError("");
+    setGenderError("");
+    setAddressError("");
+    setBirthdateError("");
 
     // Full Name Validation
-    if (!fullName) {
+    if (!profile.fullName) {
       setFullNameError("Full Name is required.");
       valid = false;
     }
 
     // Email Validation
-    const emailValid = email.includes("@") && email.includes(".com");
-    if (!email || !emailValid) {
+    const emailValid = profile.email.includes("@") && profile.email.includes(".com");
+    if (!profile.email || !emailValid) {
       setEmailError("Please enter a valid email address.");
       valid = false;
     }
 
-    // Phone Number Validation (11 digits for Philippine number)
-    if (!phoneNumber || phoneNumber.length !== 11) {
+    // Phone Number Validation (check if it's 11 digits for a valid phone number)
+    if (!profile.phoneNumber || profile.phoneNumber.length !== 11) {
       setPhoneNumberError("Phone number must be 11 digits.");
       valid = false;
     }
 
-    // Password Validation
-    if (!password) {
-      setPasswordError("Password is required.");
+    // Gender Validation
+    if (!profile.gender) {
+      setGenderError("Gender is required.");
       valid = false;
     }
 
-    // Confirm Password Validation
-    if (password !== confirmPassword) {
-      setConfirmPasswordError("Passwords do not match.");
+    // Address Validation
+    if (!profile.address) {
+      setAddressError("Address is required.");
       valid = false;
     }
 
+    // Birthdate Validation
+    if (!profile.birthdate) {
+      setBirthdateError("Birthdate is required.");
+      valid = false;
+    }
+
+    // If valid, toggle to view mode
     if (valid) {
-      navigation.navigate("Home"); // Navigate to Home if form is valid
+      setIsEditing(false); // Disable editing
     }
   };
 
   return (
     <View style={styles.container}>
-      {/* Top Image Section */}
-      <View style={styles.topImageContainer}>
-        <Image source={require("../assets/topImage.png")} style={styles.topImage} />
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Profile</Text>
       </View>
 
-      {/* Form Section */}
-      <View style={styles.formContainer}>
-        <Text style={styles.welcomeText}>Welcome!</Text>
-        <Text style={styles.subText}>Let's start creating your account.</Text>
+      <View style={styles.profilePictureContainer}>
+        <FontAwesome name="user-circle" size={80} color="#6A11CB" />
+      </View>
 
-        {/* Full Name */}
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your Full Name"
-            placeholderTextColor="#666"
-            value={fullName}
-            onChangeText={setFullName}
-          />
-          {fullNameError && <Text style={styles.errorText}>{fullNameError}</Text>}
-        </View>
+      <View style={styles.inputContainer}>
+        <FontAwesome name="user" size={20} color="#6A11CB" style={styles.icon} />
+        <TextInput
+          style={[styles.input, isEditing && styles.editableInput]}
+          placeholder="Full Name"
+          value={profile.fullName}
+          onChangeText={(text) => handleInputChange("fullName", text)}
+          editable={isEditing}
+        />
+        {fullNameError && <Text style={styles.errorText}>{fullNameError}</Text>}
+      </View>
 
-        {/* Email */}
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your Email"
-            placeholderTextColor="#666"
-            keyboardType="email-address"
-            value={email}
-            onChangeText={setEmail}
-          />
-          {emailError && <Text style={styles.errorText}>{emailError}</Text>}
-        </View>
+      <View style={styles.inputContainer}>
+        <Ionicons name="call" size={20} color="#6A11CB" style={styles.icon} />
+        <TextInput
+          style={[styles.input, isEditing && styles.editableInput]}
+          placeholder="Phone Number"
+          value={profile.phoneNumber}
+          onChangeText={(text) => handleInputChange("phoneNumber", text)}
+          editable={isEditing}
+        />
+        {phoneNumberError && <Text style={styles.errorText}>{phoneNumberError}</Text>}
+      </View>
 
-        {/* Phone Number */}
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your Phone Number"
-            placeholderTextColor="#666"
-            keyboardType="phone-pad"
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-          />
-          {phoneNumberError && <Text style={styles.errorText}>{phoneNumberError}</Text>}
-        </View>
+      <View style={styles.inputContainer}>
+        <MaterialIcons name="email" size={20} color="#6A11CB" style={styles.icon} />
+        <TextInput
+          style={[styles.input, isEditing && styles.editableInput]}
+          placeholder="Email"
+          value={profile.email}
+          onChangeText={(text) => handleInputChange("email", text)}
+          editable={isEditing}
+        />
+        {emailError && <Text style={styles.errorText}>{emailError}</Text>}
+      </View>
 
-        {/* Password */}
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your Password"
-            placeholderTextColor="#666"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={setPassword}
-          />
-          {passwordError && <Text style={styles.errorText}>{passwordError}</Text>}
-        </View>
+      <View style={styles.inputContainer}>
+        <Feather name="user" size={20} color="#6A11CB" style={styles.icon} />
+        <TextInput
+          style={[styles.input, isEditing && styles.editableInput]}
+          placeholder="Gender"
+          value={profile.gender}
+          onChangeText={(text) => handleInputChange("gender", text)}
+          editable={isEditing}
+        />
+        {genderError && <Text style={styles.errorText}>{genderError}</Text>}
+      </View>
 
-        {/* Confirm Password */}
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Confirm Password"
-            placeholderTextColor="#666"
-            secureTextEntry={true}
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-          />
-          {confirmPasswordError && <Text style={styles.errorText}>{confirmPasswordError}</Text>}
-        </View>
+      <View style={styles.inputContainer}>
+        <Ionicons name="location-sharp" size={20} color="#6A11CB" style={styles.icon} />
+        <TextInput
+          style={[styles.input, isEditing && styles.editableInput]}
+          placeholder="Address"
+          value={profile.address}
+          onChangeText={(text) => handleInputChange("address", text)}
+          editable={isEditing}
+        />
+        {addressError && <Text style={styles.errorText}>{addressError}</Text>}
+      </View>
 
-        {/* Register Button */}
-        <TouchableOpacity style={styles.button} onPress={validateForm}>
-          <Text style={styles.buttonText}>REGISTER</Text>
-        </TouchableOpacity>
+      <View style={styles.inputContainer}>
+        <FontAwesome name="calendar" size={20} color="#6A11CB" style={styles.icon} />
+        <TextInput
+          style={[styles.input, isEditing && styles.editableInput]}
+          placeholder="Birthdate"
+          value={profile.birthdate}
+          onChangeText={(text) => handleInputChange("birthdate", text)}
+          editable={isEditing}
+        />
+        {birthdateError && <Text style={styles.errorText}>{birthdateError}</Text>}
+      </View>
 
-        {/* Login Link */}
-        <Text style={styles.loginText}>
-          Already have an account?
-          {"\n"}
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text style={styles.loginLink}>Login</Text>
-          </TouchableOpacity>
+      <TouchableOpacity style={styles.editButton} onPress={toggleEditMode}>
+        <Text style={styles.editButtonText}>
+          {isEditing ? "Save Profile" : "Edit Profile"}
         </Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default RegisterScreen;
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EDF8FE",
-    alignItems: "center",
+    backgroundColor: '#EDF8FE',
+    alignItems: 'center',
+    padding: 20,
   },
-  topImageContainer: {
-    position: "absolute",
-    top: -60,
-    left: -90,
+  header: {
+    width: '100%',
+    alignItems: 'flex-start',
+    marginVertical: 10,
   },
-  topImage: {
-    height: 250,
-    width: 300,
-    resizeMode: "contain",
+  headerText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#6A11CB',
   },
-  formContainer: {
-    marginTop: 250, // Adjust this value based on topImage height
-    width: "100%",
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  welcomeText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
-    textAlign: "center",
-  },
-  subText: {
-    fontSize: 16,
-    color: "#666",
-    textAlign: "center",
+  profilePictureContainer: {
+    backgroundColor: '#6A11CB',
+    borderRadius: 50,
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 20,
   },
   inputContainer: {
-    position: "relative",
-    width: "80%",
-    marginVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    marginVertical: 8,
+    height: 60, 
+  },
+  icon: {
+    marginRight: 10,
   },
   input: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "#fff",
-    borderRadius: 25,
-    paddingHorizontal: 15,
+    flex: 1,
+    color: '#333',
     fontSize: 16,
-    color: "#333",
-    elevation: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
+    paddingVertical: 10,
+  },
+  editableInput: {
+    backgroundColor: '#f0f8ff',
+    borderColor: '#6A11CB',
+    borderWidth: 1,
+    borderRadius: 8,
   },
   errorText: {
-    position: "absolute",
+    position: 'absolute',
     right: 10,
     top: 12,
     fontSize: 12,
-    color: "red",
-    fontWeight: "bold",
+    color: 'red',
+    fontWeight: 'bold',
   },
-  button: {
-    width: "50%",
-    height: 50,
-    backgroundColor: "#A77D5B",
-    borderRadius: 25,
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 20,
+  editButton: {
+    marginTop: 20,
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 8,
+    backgroundColor: '#6A11CB',
   },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  loginText: {
-    color: "#666",
+  editButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
     fontSize: 16,
-    textAlign: "center",
-  },
-  loginLink: {
-    fontSize: 16,
-    color: "#A77D5B",
-    fontWeight: "bold",
   },
 });

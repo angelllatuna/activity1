@@ -39,8 +39,7 @@ const HomeScreen = () => {
         {/* Beverages Option */}
         <TouchableOpacity
           style={styles.menuButton}
-          onPress={() => navigation.navigate('Beverages')}
-        >
+          onPress={() => navigation.navigate('Beverages')}>
           <Image source={require('../assets/beverages.png')} style={styles.menuImage} />
           <Text style={styles.menuText}>Beverages</Text>
         </TouchableOpacity>
@@ -48,8 +47,7 @@ const HomeScreen = () => {
         {/* Pastries Option */}
         <TouchableOpacity
           style={styles.menuButton}
-          onPress={() => navigation.navigate('Pastries')}
-        >
+          onPress={() => navigation.navigate('Pastries')}>
           <Image source={require('../assets/pastries.png')} style={styles.menuImage} />
           <Text style={styles.menuText}>Pastries</Text>
         </TouchableOpacity>
@@ -59,26 +57,24 @@ const HomeScreen = () => {
       <View style={styles.bottomNav}>
         {/* Menu Button */}
         <TouchableOpacity style={styles.navButton} 
-        onPress={() => navigation.navigate('HomeScreen')}>
-          <MaterialCommunityIcons name="cup" size={30} color="#A77D5B" />
+        onPress={() => navigation.navigate('Home')}>
+          <Image source={require('../assets/menu.png')} style={styles.navImage} />
           <Text style={styles.navText}>Menu</Text>
         </TouchableOpacity>
 
         {/* Order Button */}
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => navigation.navigate('Order')}
-        >
-          <MaterialCommunityIcons name="cart-outline" size={30} color="#A77D5B" />
+          onPress={() => navigation.navigate('Order')}>
+            <Image source={require('../assets/order.png')} style={styles.navImage} />
           <Text style={styles.navText}>Order</Text>
         </TouchableOpacity>
 
         {/* Profile Button */}
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => navigation.navigate('Profile')}
-        >
-          <MaterialCommunityIcons name="account" size={30} color="#A77D5B" />
+          onPress={() => navigation.navigate('Profile')}>
+            <Image source={require('../assets/profile.png')} style={styles.navImage} />
           <Text style={styles.navText}>Profile</Text>
         </TouchableOpacity>
       </View>
@@ -139,20 +135,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   menuButton: {
-    width: '80%',
+    width: '70%',
     backgroundColor: '#fff',
     borderRadius: 15,
     alignItems: 'center',
     padding: 20,
-    elevation: 5,
     marginBottom: 20,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
   },
   menuImage: {
-    width: 50, // Adjust the width as needed
-    height: 50, // Adjust the height as needed
+    width: 100, // Adjust the width as needed
+    height: 100, // Adjust the height as needed
+    resizeMode: 'contain',
+  },
+
+  navImage: {
+    width: 40, // Adjust the width as needed
+    height: 40, // Adjust the height as needed
     resizeMode: 'contain',
   },
   menuText: {

@@ -12,15 +12,15 @@ import { useNavigation } from "@react-navigation/native";
 import { CartContext } from "./CartContext";
 
 const pastries = [
-  { id: "1", name: "Ensaymada", icon: "coffee" },
-  { id: "2", name: "Pan de Sal", icon: "coffee-outline" },
-  { id: "3", name: "Bibingka", icon: "cup" },
-  { id: "4", name: "Leche Flan", icon: "coffee-maker" },
-  { id: "5", name: "Ube Cake", icon: "cup-outline" },
-  { id: "6", name: "Cassava Cake", icon: "beer-outline" },
-  { id: "7", name: "Turon", icon: "cup-water" },
-  { id: "9", name: "Puto", icon: "food-croissant" },
-  { id: "10", name: "Biko", icon: "food-fork-drink" },
+  { id: "1", name: "Ensaymada", image: require("../assets/ensaymada.png") },
+  { id: "2", name: "Pandesal", image: require("../assets/pandesal.png") },
+  { id: "3", name: "Bibingka", image: require("../assets/bibingka.png") },
+  { id: "4", name: "Leche Flan", image: require("../assets/lecheflan.png") },
+  { id: "5", name: "Ube Cake", image: require("../assets/ubepie.png") },
+  { id: "6", name: "Cassava Cake", image: require("../assets/casssavacake.png") },
+  { id: "7", name: "Turon", image: require("../assets/turon.png") },
+  { id: "9", name: "Puto", image: require("../assets/puto.png") },
+  { id: "10", name: "Biko", image: require("../assets/biko.png") },
 ];
 
 const PastriesScreen = () => {
@@ -61,58 +61,44 @@ const PastriesScreen = () => {
         <View style={styles.menuGrid}>
           {pastries.map((item) => (
             <TouchableOpacity
-            key={item.id}
-            style={styles.menuButton}
-            onPress={() =>
-              navigation.navigate("PastryOrderPage", { pastryItems: [{ ...item, quantity: 1 }] })
-            }
-          >
-            <MaterialCommunityIcons
-              name={item.icon}
-              size={50}
-              color="#A77D5B"
-            />
-            <Text style={styles.menuText}>{item.name}</Text>
-          </TouchableOpacity>          
+              key={item.id}
+              style={styles.menuButton}
+              onPress={() =>
+                navigation.navigate("PastryOrderPage", {
+                  pastryItems: [{ ...item, quantity: 1 }],
+                })
+              }
+            >
+              <Image source={item.image} style={styles.menuIcon} />
+              <Text style={styles.menuText}>{item.name}</Text>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
 
       {/* Bottom Navigation */}
-      <View style={styles.bottomNav}>
-        {/* Menu Button */}
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigation.navigate("Home")}
-        >
-          <MaterialCommunityIcons name="cup" size={30} color="#A77D5B" />
-          <Text style={styles.navText}>Menu</Text>
-        </TouchableOpacity>
-
-        {/* Order Button */}
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigation.navigate("Order")}
-        >
-          <MaterialCommunityIcons
-            name="cart-outline"
-            size={30}
-            color="#A77D5B"
-          />
-          <Text style={styles.navText}>Order</Text>
-        </TouchableOpacity>
-
-        {/* Profile Button */}
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigation.navigate("Profile")}
-        >
-          <MaterialCommunityIcons
-            name="account-outline"
-            size={30}
-            color="#A77D5B"
-          />
-          <Text style={styles.navText}>Profile</Text>
+            <View style={styles.bottomNav}>
+              {/* Menu Button */}
+              <TouchableOpacity style={styles.navButton} 
+              onPress={() => navigation.navigate('Home')}>
+                <Image source={require('../assets/menu.png')} style={styles.navImage} />
+                <Text style={styles.navText}>Menu</Text>
+              </TouchableOpacity>
+      
+              {/* Order Button */}
+              <TouchableOpacity 
+                style={styles.navButton}
+                onPress={() => navigation.navigate('Order')}>
+                  <Image source={require('../assets/order.png')} style={styles.navImage} />
+                <Text style={styles.navText}>Order</Text>
+              </TouchableOpacity>
+      
+              {/* Profile Button */}
+              <TouchableOpacity 
+                style={styles.navButton}
+                onPress={() => navigation.navigate('Profile')}>
+                  <Image source={require('../assets/profile.png')} style={styles.navImage} />
+                  <Text style={styles.navText}>Profile</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -146,12 +132,11 @@ const styles = StyleSheet.create({
   },
   menuTitle: {
     fontSize: 30,
-    fontWeight: "700",
     color: "#000",
     fontFamily: "Roboto",
     marginTop: 100,
     paddingLeft: 100,
-    textAlign: "center",
+    
   },
   cartButton: {
     position: "absolute",
@@ -160,7 +145,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     flexDirection: "row",
   },
-
   cartBadge: {
     position: "absolute",
     top: -5,
@@ -172,7 +156,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
   cartBadgeText: {
     fontSize: 12,
     color: "#fff",
@@ -193,17 +176,21 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   menuButton: {
-    width: "45%",
+    width: "40%",
     backgroundColor: "#fff",
     borderRadius: 15,
     alignItems: "center",
     padding: 20,
-    elevation: 5,
     marginBottom: 20,
     marginHorizontal: "2.5%",
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
+
+  
+  },
+  menuIcon: {
+    width: 140,
+    height: 140,
+    margin: -45,
+    resizeMode: "contain",
   },
   menuText: {
     fontSize: 20,
@@ -237,5 +224,15 @@ const styles = StyleSheet.create({
     color: "#A77D5B",
     marginTop: 5,
     fontFamily: "Roboto",
+  },
+  menuImage: {
+    width: 40, // Adjust the width as needed
+    height: 40, // Adjust the height as needed
+    resizeMode: 'contain',
+  },
+  navImage: {
+    width: 40, // Adjust the width as needed
+    height: 40, // Adjust the height as needed
+    resizeMode: 'contain',
   },
 });
